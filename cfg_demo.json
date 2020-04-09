@@ -1,0 +1,63 @@
+{
+    "value": "0x5000002F",
+    "reset_value": "0x5a5a5a5a",
+    "bit_len": "32",
+    "region": [
+        {
+            "name": "filed0",
+            "start": "0",
+            "end": "5",
+            "func": {
+                "0x00000000": "func_0x00",
+                "0x00000001": "func_0x01",
+                "0x00000002": "func_0x02",
+                "0x0000002F": "func_0x2F",
+                "other": "reverse"
+            }
+        },
+        {
+            "name": "filed1",
+            "start": "6",
+            "end": "14",
+            "func": {
+                "0x00000000": "func_0x00",
+                "0x00000001": "func_0x01",
+                "0x00000007": "func_0x07",
+                "0x000001FF": "func_0x1FF",
+                "other": "reverse"
+            }
+        },
+        {
+            "name": "filed2",
+            "start": "12",
+            "end": "14",
+            "func": {
+                "0x00000000": "func_0x00",
+                "0x00000001": "func_0x01",
+                "0x00000007": "func_0x07",
+                "0x00000008": "func_0x08",
+                "other": "reverse"
+            }
+        },
+        {
+            "name": "filed3",
+            "start": "15",
+            "end": "20",
+            "func": {
+                "other": "reverse"
+            }
+        },
+        {
+            "name": "filed4",
+            "start": "21",
+            "end": "31",
+            "func": {
+                "0x00000000": "func_0x00",
+                "0x00000001": "func_0x01",
+                "0x00000055": "func_0x55",
+                "0x000007FF": "func_0x7FF",
+                "other": "reverse"
+            }
+        }
+    ]
+}
