@@ -10,47 +10,58 @@
         "region": []
     },
     "0x00000000": {
-        "value": "0xFFFFFFFF",
-        "reset_value": "0x0A0A0A0A",
+        "value": "0x00000000",
+        "reset_value": "0x5a5a5a5a",
         "bit_len": "32",
         "region": [
             {
                 "name": "filed0",
                 "start": "0",
-                "end": "4",
+                "end": "5",
                 "func": {
                     "0x00000000": "func_0x00",
-                    "0x00000004": "func_0x04",
-                    "0x0000000A": "func_reset",
-                    "other": "reverse"
+                    "0x00000001": "func_0x01",
+                    "0x00000002": "func_0x02",
+                    "0x0000002F": "func_0x2F"
                 }
             },
             {
                 "name": "filed1",
-                "start": "5",
-                "end": "13",
+                "start": "6",
+                "end": "14",
                 "func": {
                     "0x00000000": "func_0x00",
-                    "0x000000AA": "func_0xAA",
-                    "other": "reverse"
+                    "0x00000001": "func_0x01",
+                    "0x00000007": "func_0x07",
+                    "0x000001FF": "func_0x1FF"
                 }
             },
             {
                 "name": "filed2",
-                "start": "13",
-                "end": "18",
+                "start": "12",
+                "end": "14",
                 "func": {
                     "0x00000000": "func_0x00",
-                    "0x0000001F": "func_0x1F",
-                    "other": "reverse"
+                    "0x00000001": "func_0x01",
+                    "0x00000007": "func_0x07",
+                    "0x00000008": "func_0x08"
                 }
             },
             {
                 "name": "filed3",
-                "start": "19",
+                "start": "15",
+                "end": "20",
+                "func": {}
+            },
+            {
+                "name": "filed4",
+                "start": "21",
                 "end": "31",
                 "func": {
-                    "other": "reverse"
+                    "0x00000000": "func_0x00",
+                    "0x00000001": "func_0x01",
+                    "0x00000055": "func_0x55",
+                    "0x000007FF": "func_0x7FF"
                 }
             }
         ]
@@ -68,8 +79,7 @@
                     "0x00000000": "func_0x00",
                     "0x00000001": "func_0x01",
                     "0x0000003F": "func_0x3F",
-                    "0x0000000F": "func_0x0F",
-                    "other": "reverse"
+                    "0x0000000F": "func_0x0F"
                 }
             },
             {
@@ -79,17 +89,14 @@
                 "func": {
                     "0x00000000": "func_0x00",
                     "0x00000001": "func_0x01",
-                    "0x0000000F": "func_0x0F",
-                    "other": "reverse"
+                    "0x0000000F": "func_0x0F"
                 }
             },
             {
                 "name": "filed2",
                 "start": "12",
                 "end": "31",
-                "func": {
-                    "other": "reverse"
-                }
+                "func": {}
             }
         ]
     },
@@ -106,8 +113,7 @@
                     "0x00000000": "func_0x00",
                     "0x00000001": "func_0x01",
                     "0x00000002": "func_0x02",
-                    "0x0000002F": "func_0x2F",
-                    "other": "reverse"
+                    "0x0000002F": "func_0x2F"
                 }
             },
             {
@@ -118,8 +124,7 @@
                     "0x00000000": "func_0x00",
                     "0x00000001": "func_0x01",
                     "0x00000007": "func_0x07",
-                    "0x000001FF": "func_0x1FF",
-                    "other": "reverse"
+                    "0x000001FF": "func_0x1FF"
                 }
             },
             {
@@ -130,17 +135,14 @@
                     "0x00000000": "func_0x00",
                     "0x00000001": "func_0x01",
                     "0x00000007": "func_0x07",
-                    "0x00000008": "func_0x08",
-                    "other": "reverse"
+                    "0x00000008": "func_0x08"
                 }
             },
             {
                 "name": "filed3",
                 "start": "15",
                 "end": "20",
-                "func": {
-                    "other": "reverse"
-                }
+                "func": {}
             },
             {
                 "name": "filed4",
@@ -150,8 +152,7 @@
                     "0x00000000": "func_0x00",
                     "0x00000001": "func_0x01",
                     "0x00000055": "func_0x55",
-                    "0x000007FF": "func_0x7FF",
-                    "other": "reverse"
+                    "0x000007FF": "func_0x7FF"
                 }
             }
         ]
@@ -209,8 +210,7 @@
                 "end": "4",
                 "func": {
                     "0x00000000": "func_0x00",
-                    "0x00000004": "func_0x04",
-                    "other": "reverse"
+                    "0x00000004": "func_0x04"
                 }
             },
             {
@@ -219,8 +219,7 @@
                 "end": "13",
                 "func": {
                     "0x00000000": "func_0x00",
-                    "0x000000AA": "func_0xAA",
-                    "other": "reverse"
+                    "0x000000AA": "func_0xAA"
                 }
             },
             {
@@ -229,16 +228,70 @@
                 "end": "18",
                 "func": {
                     "0x00000000": "func_0x00",
-                    "0x0000001F": "func_0x1F",
-                    "other": "reverse"
+                    "0x0000001F": "func_0x1F"
                 }
             },
             {
                 "name": "filed3",
                 "start": "19",
                 "end": "31",
+                "func": {}
+            }
+        ]
+    },
+    "0x00000028": {
+        "value": "0x5000002F",
+        "reset_value": "0x5a5a5a5a",
+        "bit_len": "32",
+        "region": [
+            {
+                "name": "filed0",
+                "start": "0",
+                "end": "5",
                 "func": {
-                    "other": "reverse"
+                    "0x00000000": "func_0x00",
+                    "0x00000001": "func_0x01",
+                    "0x00000002": "func_0x02",
+                    "0x0000002F": "func_0x2F"
+                }
+            },
+            {
+                "name": "filed1",
+                "start": "6",
+                "end": "14",
+                "func": {
+                    "0x00000000": "func_0x00",
+                    "0x00000001": "func_0x01",
+                    "0x00000007": "func_0x07",
+                    "0x000001FF": "func_0x1FF"
+                }
+            },
+            {
+                "name": "filed2",
+                "start": "12",
+                "end": "14",
+                "func": {
+                    "0x00000000": "func_0x00",
+                    "0x00000001": "func_0x01",
+                    "0x00000007": "func_0x07",
+                    "0x00000008": "func_0x08"
+                }
+            },
+            {
+                "name": "filed3",
+                "start": "15",
+                "end": "20",
+                "func": {}
+            },
+            {
+                "name": "filed4",
+                "start": "21",
+                "end": "31",
+                "func": {
+                    "0x00000000": "func_0x00",
+                    "0x00000001": "func_0x01",
+                    "0x00000055": "func_0x55",
+                    "0x000007FF": "func_0x7FF"
                 }
             }
         ]

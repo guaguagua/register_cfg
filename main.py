@@ -31,13 +31,17 @@ class MainWindow(QMainWindow):
                                 self.ui.check_32_28,self.ui.check_32_29,self.ui.check_32_30,self.ui.check_32_31]
 
         self.table_com_box_list = []
+        
         self.init_all_check_bit_btn()
         self.init_table()
+        
         
         #触发一下地址信息改变
         self.send_addr_change_signal()  
 
         self.init_cfg()
+
+        self.ui.hex_update_value_enable_radio.setChecked(True)
         
 
     # common use########################################################################
@@ -113,14 +117,14 @@ class MainWindow(QMainWindow):
         #self.on_hex_line_edit_addr_textChanged(value)
         #print("on_hex_line_edit_value_textChanged")
         #print(value)
-        if len(value) != len("0x00000000"):
+        if len(value) != len(self.default_addr):
             return
         self.update_all_check_btn() #更新Bit表
 
         #update table
         addr = self.ui.hex_line_edit_addr.text()
         self.update_table(addr) 
-        self.ui.hex_update_value_enable_radio.setChecked(True)
+        #self.ui.hex_update_value_enable_radio.setChecked(True)
 
     @pyqtSlot()
     def on_hex_read_btn_clicked(self):
@@ -139,7 +143,7 @@ class MainWindow(QMainWindow):
             #print("cfg_addr_list")
             self.json_parse.json_reg_cfg_data[addr]["value"] = value
             #self.json_parse.write_json(self.json_parse.json_reg_cfg_data,self.json_parse.register_cfg_file_path)
-        else:
+        else:# add new addr config
             #print("cfg_addr_list else")
             self.json_parse.json_reg_cfg_data[addr] = {}
             self.json_parse.json_reg_cfg_data[addr]["value"] = value
@@ -149,7 +153,7 @@ class MainWindow(QMainWindow):
         if addr in self.json_parse.value_addr_list:#save to register_value.json
             #print("value_addr_list")
             print("replace tip")
-        self.json_parse.json_reg_value_data[addr] = value
+            self.json_parse.json_reg_value_data[addr] = value
 
         #print("save_all_data")
         self.json_parse.save_all_data()
@@ -159,30 +163,50 @@ class MainWindow(QMainWindow):
 
     # reset value handle ########################################################################
     @pyqtSlot(str)
-    def on_hex_line_edit_reset_value_textChanged(self,string):
+    def on_hex_line_edit_reset_value_textChanged(self,value):
         print("on_hex_line_edit_reset_value_textChanged")
-        #self.update_all_check_btn() #更新Bit表
+        if len(value) != len(self.default_addr):
+            return
+        self.update_all_check_btn() #更新Bit表
+
+        #update table
+        addr = self.ui.hex_line_edit_addr.text()
+        self.update_table(addr)
 
     @pyqtSlot()
     def on_hex_reset_value_read_btn_clicked(self):
-        print("on_hex_hex_reset_value_read_btn_clicked")
-        addr = self.ui.hex_line_edit_addr.text()
-        addr = self.json_parse.trans_addr_to_json(addr)
-        value = self.json_parse.json_reg_cfg_data[addr]["reset_value"]
-        value = self.json_parse.trans_addr_to_json(value)
-        self.ui.hex_line_edit_reset_value.setText(value)
+        #print("on_hex_hex_reset_value_read_btn_clicked")
+        self.update_reset_value()
 
     @pyqtSlot()
     def on_hex_reset_value_save_btn_clicked(self):
-        print("on_hex_hex_reset_value_save_btn_clicked")
+        #print("on_hex_hex_reset_value_save_btn_clicked")
         addr = self.ui.hex_line_edit_addr.text()
         addr = self.json_parse.trans_addr_to_json(addr)
-        value = self.ui.hex_line_edit_reset_value.text()
-        value = self.json_parse.trans_addr_to_json(value)
-        self.json_parse.json_reg_cfg_data[addr]["reset_value"] = value
-        self.json_parse.save_all_data()
-        self.ui.hex_line_edit_reset_value.setText(value)
+        if addr in self.json_parse.cfg_addr_list:
+            value = self.ui.hex_line_edit_reset_value.text()
+            value = self.json_parse.trans_addr_to_json(value)
+            self.json_parse.json_reg_cfg_data[addr]["reset_value"] = value
+            self.json_parse.save_all_data()
+            self.ui.hex_line_edit_reset_value.setText(value)
+        else:
+            print("on_hex_reset_value_save_btn_clicked no addr")
+    
+    @pyqtSlot(bool)
+    def on_hex_update_value_enable_radio_toggled(self,bool):
+        if self.ui.hex_update_value_enable_radio.isChecked():
+            #print("on_hex_update_value_enable_radio_toggled")
+            self.update_all_check_btn()
+            addr = self.ui.hex_line_edit_addr.text()
+            self.update_table(addr) 
 
+    @pyqtSlot(bool)
+    def on_hex_update_reset_enable_radio_toggled(self,bool):
+        if self.ui.hex_update_reset_enable_radio.isChecked():
+            #print("on_hex_update_reset_enable_radio_toggled")
+            self.update_all_check_btn()
+            addr = self.ui.hex_line_edit_addr.text()
+            self.update_table(addr) 
 
     #bit handle functions############################################################################
     def init_all_check_bit_btn(self):
@@ -197,7 +221,13 @@ class MainWindow(QMainWindow):
             check.toggled['bool'].connect(self.update_hex_line_edit_value)
 
     def update_all_check_btn(self):
-        text = self.ui.hex_line_edit_value.text()
+        if self.ui.hex_update_value_enable_radio.isChecked():
+            text = self.ui.hex_line_edit_value.text()
+        elif self.ui.hex_update_reset_enable_radio.isChecked():
+            text = self.ui.hex_line_edit_reset_value.text()
+        else:
+            print("update_all_check_btn error")
+            return
         value = int(text,16)
 
         data_bit_len = self.json_parse.data_byte_len * 8
@@ -273,14 +303,17 @@ class MainWindow(QMainWindow):
         self.update_table(self.default_addr)
         self.ui.hex_table_edit_check.setChecked(True)
         self.ui.hex_table_edit_check.setChecked(False)
+        self.ui.hex_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
     @pyqtSlot(bool)
     def on_hex_table_edit_check_toggled(self,bool):
         #print("on_table_edit_check_toggled",bool)
+        '''
         if bool:
             self.ui.hex_table.setEditTriggers(QAbstractItemView.DoubleClicked)
         else:
             self.ui.hex_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        '''
 
         self.set_table_com_box_state(bool)
         self.ui.hex_table_update_btn.setEnabled(bool)
@@ -395,22 +428,30 @@ class MainWindow(QMainWindow):
 
             self.update_table_name(row,self.table_feild_col,name)
             self.update_table_range(row,self.table_range_col,bit_range)
+            value = 0
+            if self.ui.hex_update_value_enable_radio.isChecked():
+                value = self.ui.hex_line_edit_value.text()
+            elif self.ui.hex_update_reset_enable_radio.isChecked():
+                value = self.ui.hex_line_edit_reset_value.text()
+                print("update_table reset")
+            else:
+                print("update_table error")
+                return
 
-            value = self.ui.hex_line_edit_value.text()
             value = int(value,16)
             value = self.get_bit_range_value(value,int(bit_start),int(bit_end))
             value = self.json_parse.trans_addr_to_json(hex(value))
             self.update_table_value(row,self.table_value_col,value)
             
+            dic_func_list = list(dic_func.values())
+            dic_func_list.append("Not Found")
+            self.update_table_all_func(row,self.table_func_col,dic_func_list)
+
             key = value
-            if key not in dic_func:
-                key = "other"
-            #self.update_table_func(row,3,dic_func[key])
-            
-
-            self.update_table_all_func(row,self.table_func_col,dic_func.values())
-            self.table_com_box_list[row].setCurrentText(dic_func[key])
-
+            if key in dic_func:
+                self.table_com_box_list[row].setCurrentText(dic_func[key])
+            else:
+                self.table_com_box_list[row].setCurrentText("Not Found")
         #disable edit
         self.ui.hex_table_edit_check.setChecked(True)
         self.ui.hex_table_edit_check.setChecked(False)
@@ -419,9 +460,18 @@ class MainWindow(QMainWindow):
         #print("*"*50)
         sender = self.sender()
         #print(func)
+        if not self.ui.hex_table_edit_check.checkState():#表格编辑没有使能
+            return
         
         if not sender.objectName().startswith("table_com_box_"):#这里应该有bug:hex_line_edit_addr 改变也会触发，实际并没有connect到hex_line_edit_addr
             #print("&"*50,sender.objectName())
+            return
+
+        if "Not Found" == func:
+            #msg: can not select this func
+            #currentText = sender.currentText()
+            #print(currentText)
+            reply = QMessageBox.information(self,"msg","can not select this func",QMessageBox.Yes)
             return
         
         #查找func对应的值
@@ -441,22 +491,44 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot(str)
     def on_cfg_line_edit_addr_textChanged(self,addr):
-        pass
+        print("on_cfg_line_edit_addr_textChanged")
+
+    def read_addr_cfg(self):
+        addr = self.ui.cfg_line_edit_addr.text()
+        if addr in self.json_parse.cfg_addr_list:
+            addr_cfg = self.json_parse.json_reg_cfg_data[addr]
+            addr_cfg = json.dumps(addr_cfg, indent=4)
+            self.ui.cfg_text_edit.setText(str(addr_cfg))
+        else:
+            #print("on_cfg_read_btn_clicked not find addr:%s",(addr,))
+            text = " not find addr:{} config".format(addr)
+            self.ui.cfg_text_edit.setText(text)
+
 
     @pyqtSlot()
     def on_cfg_read_btn_clicked(self):
-        addr = self.ui.cfg_line_edit_addr.text()
-        addr_cfg = self.json_parse.json_reg_cfg_data[addr]
+        self.read_addr_cfg()
 
-        addr_cfg = json.dumps(addr_cfg, indent=4)
+    @pyqtSlot()
+    def on_cfg_demo_btn_clicked(self):
+        with open("./cfg_demo.json","r") as f:
+            text = f.read()
+            self.ui.cfg_text_edit.setText(text)
+            f.close()
 
-        self.ui.cfg_text_edit.setText(str(addr_cfg))
+    @pyqtSlot()
+    def on_cfg_clear_btn_clicked(self):
+        self.ui.cfg_text_edit.setText("")
 
     @pyqtSlot()
     def on_cfg_add_btn_clicked(self):
         text = self.ui.cfg_text_edit.toPlainText()
-        dic = json.loads(text)
-        #print(type(dic))
+        try:# 数据json字符串格式不符合要求
+            dic = json.loads(text)
+        except Exception as e:
+            print(e)
+            return
+        print(type(dic))
         addr = self.ui.cfg_line_edit_addr.text()
         addr = self.json_parse.trans_addr_to_json(addr)
         if addr in self.json_parse.cfg_addr_list:
@@ -467,16 +539,54 @@ class MainWindow(QMainWindow):
 
         # udate json ram data
         self.reload_all_json_data()
-    @pyqtSlot()
-    def on_cfg_clear_btn_clicked(self):
-        self.ui.cfg_text_edit.setText("")
 
     @pyqtSlot()
-    def on_cfg_demo_btn_clicked(self):
-        with open("./cfg_demo.json","r") as f:
+    def on_cfg_up_btn_clicked(self):
+        addr = self.ui.cfg_line_edit_addr.text()
+        addr = int(addr,16) + 4
+        addr = self.json_parse.trans_addr_to_json(hex(addr))
+        self.ui.cfg_line_edit_addr.setText(addr)
+
+        self.read_addr_cfg()
+
+    @pyqtSlot()
+    def on_cfg_down_btn_clicked(self):
+        addr = self.ui.cfg_line_edit_addr.text()
+        addr = int(addr,16) - 4
+        if addr < 0:
+            addr = 0
+        addr = self.json_parse.trans_addr_to_json(hex(addr))
+        self.ui.cfg_line_edit_addr.setText(addr)
+
+        self.read_addr_cfg()
+
+    @pyqtSlot()
+    def on_cfg_read_json_cfg_btn_clicked(self):
+        with open("./register_cfg.json") as f:
             text = f.read()
             self.ui.cfg_text_edit.setText(text)
             f.close()
+
+
+    @pyqtSlot()
+    def on_cfg_read_json_value_btn_clicked(self):
+        with open("./register_value.json") as f:
+            text = f.read()
+            self.ui.cfg_text_edit.setText(text)
+            f.close()
+
+    @pyqtSlot()
+    def on_generate_reg_c_file_clicked(self):
+        text = "void register_init(void)\n"
+        text += "{\n"
+        for k,v in self.json_parse.json_reg_value_data.items():
+            #print(k,v)
+            # *((volatile uint32_t*) 0x00000000) = 0x00000000;
+            text += "    *((volatile uint32_t*) {}) = {}; \n".format(k,v)
+        text += "}"
+        self.ui.cfg_text_edit.setText(text)
+
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

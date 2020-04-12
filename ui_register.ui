@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="hex_tab">
      <attribute name="title">
@@ -842,20 +842,46 @@
        <string>Enable</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>12</x>
         <y>17</y>
-        <width>461</width>
+        <width>541</width>
         <height>120</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,0,0,0">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
+      <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,0,0,0,0">
+       <item row="0" column="3">
+        <widget class="QPushButton" name="hex_addr_down">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>down addr</string>
+         </property>
          <property name="text">
-          <string>Addr </string>
+          <string>Down</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="hex_addr_up">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>up addr</string>
+         </property>
+         <property name="text">
+          <string>Up</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -878,39 +904,6 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="hex_addr_up">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>up addr</string>
-         </property>
-         <property name="text">
-          <string>Up</string>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="hex_addr_down">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>down addr</string>
-         </property>
-         <property name="text">
-          <string>Down</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
@@ -919,12 +912,23 @@
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QLineEdit" name="hex_line_edit_reset_value"/>
-       </item>
-       <item row="4" column="3">
-        <widget class="QPushButton" name="hex_reset_value_save_btn">
+        <widget class="QLineEdit" name="hex_line_edit_reset_value">
          <property name="text">
-          <string>Save</string>
+          <string>0x00000000</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Addr </string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QPushButton" name="hex_reset_value_read_btn">
+         <property name="text">
+          <string>Read</string>
          </property>
         </widget>
        </item>
@@ -938,6 +942,13 @@
          </property>
         </widget>
        </item>
+       <item row="4" column="3">
+        <widget class="QPushButton" name="hex_reset_value_save_btn">
+         <property name="text">
+          <string>Save</string>
+         </property>
+        </widget>
+       </item>
        <item row="4" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
@@ -945,17 +956,20 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QPushButton" name="hex_reset_value_read_btn">
-         <property name="text">
-          <string>Read</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="1">
         <widget class="QLineEdit" name="hex_line_edit_value">
          <property name="text">
           <string>0x00000000</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="5">
+        <widget class="QRadioButton" name="hex_update_reset_enable_radio">
+         <property name="toolTip">
+          <string>update bit cfg value to Value</string>
+         </property>
+         <property name="text">
+          <string>Enable</string>
          </property>
         </widget>
        </item>
@@ -969,6 +983,37 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="0" colspan="6">
+        <widget class="Line" name="line_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="5">
+        <widget class="QRadioButton" name="hex_update_value_enable_radio">
+         <property name="toolTip">
+          <string>update bit cfg value to Reset</string>
+         </property>
+         <property name="text">
+          <string>Enable</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="6">
+        <widget class="Line" name="line_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QPushButton" name="hex_copy_reset_btn">
+         <property name="text">
+          <string>CpyReset</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="4">
         <widget class="QPushButton" name="hex_reload_btn">
          <property name="toolTip">
@@ -979,43 +1024,16 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="5">
-        <widget class="Line" name="line_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="5">
-        <widget class="Line" name="line_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QRadioButton" name="hex_update_value_enable_radio">
-         <property name="toolTip">
-          <string>update bit cfg value to Reset</string>
-         </property>
-         <property name="text">
-          <string>Enable</string>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="4">
-        <widget class="QRadioButton" name="hex_update_reset_enable_radio">
-         <property name="toolTip">
-          <string>update bit cfg value to Value</string>
-         </property>
+        <widget class="QPushButton" name="hex_copy_value_btn">
          <property name="text">
-          <string>Enable</string>
+          <string>CpyValue</string>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>480</x>
@@ -1062,7 +1080,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>11</x>
@@ -1082,58 +1100,6 @@
        <item>
         <widget class="QLineEdit" name="cfg_line_edit_addr"/>
        </item>
-       <item>
-        <widget class="QPushButton" name="cfg_up_btn">
-         <property name="toolTip">
-          <string>addr minus 4</string>
-         </property>
-         <property name="text">
-          <string>Up</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="cfg_down_btn">
-         <property name="toolTip">
-          <string>addr plus 4</string>
-         </property>
-         <property name="text">
-          <string>Down</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="cfg_clear_btn">
-         <property name="toolTip">
-          <string>clear text config</string>
-         </property>
-         <property name="text">
-          <string>Clear</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="cfg_add_btn">
-         <property name="toolTip">
-          <string>save addr cfg to json</string>
-         </property>
-         <property name="text">
-          <string>Save</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>46</y>
-        <width>611</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QPushButton" name="cfg_read_btn">
          <property name="toolTip">
@@ -1155,12 +1121,64 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="cfg_clear_btn">
+         <property name="toolTip">
+          <string>clear text config</string>
+         </property>
+         <property name="text">
+          <string>Clear</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cfg_add_btn">
+         <property name="toolTip">
+          <string>save addr cfg to json</string>
+         </property>
+         <property name="text">
+          <string>AddCfg</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>46</y>
+        <width>611</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="cfg_up_btn">
+         <property name="toolTip">
+          <string>addr minus 4</string>
+         </property>
+         <property name="text">
+          <string>Up</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cfg_down_btn">
+         <property name="toolTip">
+          <string>addr plus 4</string>
+         </property>
+         <property name="text">
+          <string>Down</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="cfg_read_json_cfg_btn">
          <property name="toolTip">
           <string>read all json cfg file</string>
          </property>
          <property name="text">
-          <string>ReadCfg</string>
+          <string>ReadAllCfg</string>
          </property>
         </widget>
        </item>
@@ -1170,7 +1188,7 @@
           <string>read all value file</string>
          </property>
          <property name="text">
-          <string>ReadValue</string>
+          <string>ReadAllValue</string>
          </property>
         </widget>
        </item>
@@ -1180,7 +1198,7 @@
           <string>generate register c file</string>
          </property>
          <property name="text">
-          <string>GenC</string>
+          <string>GenClang</string>
          </property>
         </widget>
        </item>

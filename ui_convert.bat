@@ -1,0 +1,1 @@
+pyuic5.bat -o .\ui_register.py .\ui_register.ui
