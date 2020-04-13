@@ -1193,12 +1193,22 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="generate_reg_c_file">
+        <widget class="QPushButton" name="cfg_generate_reg_c_file">
          <property name="toolTip">
           <string>generate register c file</string>
          </property>
          <property name="text">
           <string>GenClang</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cfg_addr_list_btn">
+         <property name="toolTip">
+          <string>get all config addr list</string>
+         </property>
+         <property name="text">
+          <string>AddrList</string>
          </property>
         </widget>
        </item>

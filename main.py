@@ -576,7 +576,7 @@ class MainWindow(QMainWindow):
             f.close()
 
     @pyqtSlot()
-    def on_generate_reg_c_file_clicked(self):
+    def on_cfg_generate_reg_c_file_clicked(self):
         text = "void register_init(void)\n"
         text += "{\n"
         for k,v in self.json_parse.json_reg_value_data.items():
@@ -586,6 +586,12 @@ class MainWindow(QMainWindow):
         text += "}"
         self.ui.cfg_text_edit.setText(text)
 
+    @pyqtSlot()
+    def on_cfg_addr_list_btn_clicked(self):
+        text = ""
+        for x in self.json_parse.cfg_addr_list:
+            text += x+"\n"
+        self.ui.cfg_text_edit.setText(text)
 
 
 if __name__ == "__main__":
