@@ -254,7 +254,7 @@
     },
     "0x00000028": {
         "value": "0x5000002F",
-        "reset_value": "0x5a5a5a5a",
+        "reset_value": "0x5A5A5A50",
         "bit_len": "32",
         "region": [
             {

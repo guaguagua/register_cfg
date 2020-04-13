@@ -821,7 +821,7 @@
        <rect>
         <x>480</x>
         <y>190</y>
-        <width>181</width>
+        <width>195</width>
         <height>30</height>
        </rect>
       </property>
@@ -866,11 +866,11 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>561</width>
+        <width>681</width>
         <height>30</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,3,3,3">
+      <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,3,3,3,4">
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
@@ -930,6 +930,13 @@
          </property>
          <property name="text">
           <string>Down</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="hex_addr_cfg_tip">
+         <property name="text">
+          <string>Not find config</string>
          </property>
         </widget>
        </item>
@@ -1004,13 +1011,20 @@
      <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>524</x>
+        <x>330</x>
         <y>640</y>
-        <width>177</width>
+        <width>371</width>
         <height>30</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLabel" name="hex_table_func_list_label">
+         <property name="text">
+          <string>Not func list config</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QCheckBox" name="hex_table_edit_check">
          <property name="layoutDirection">

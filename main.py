@@ -47,8 +47,9 @@ class MainWindow(QMainWindow):
     # common use########################################################################
     def send_addr_change_signal(self):
         #cur_addr = self.ui.hex_line_edit_addr.text()
-        self.ui.hex_line_edit_addr.setText("0x00000000")#发送信号
-        self.ui.hex_line_edit_addr.setText("0xFFFFFFFF")
+        #self.ui.hex_line_edit_addr.setText("0x00000000")#发送信号
+        self.ui.hex_line_edit_addr.setText("0xFFFFFFFF")    
+        self.ui.hex_line_edit_addr.setText(self.default_addr)
         #print("cur_addr",cur_addr)
 
     def reload_all_json_data(self):
@@ -95,15 +96,23 @@ class MainWindow(QMainWindow):
 
         value = self.json_parse.get_addr_value(addr)
         if not value:
-            reply = QMessageBox.information(self,"msg","addr value not exists",QMessageBox.Yes)
+            #reply = QMessageBox.information(self,"msg","addr value not exists",QMessageBox.Yes)
+            self.ui.hex_addr_cfg_tip.setText("Not find config")
+            self.ui.hex_addr_cfg_tip.setStyleSheet("color: red")
+            return
         else:
             self.ui.hex_line_edit_value.setText(value)
 
         value = self.json_parse.get_reset_value(addr)
         if not value:
-            reply = QMessageBox.information(self,"msg","addr value not exists",QMessageBox.Yes)
+            #reply = QMessageBox.information(self,"msg","addr reset value not exists",QMessageBox.Yes)
+            self.ui.hex_addr_cfg_tip.setText("Not find config")
+            self.ui.hex_addr_cfg_tip.setStyleSheet("color: red")
+            return
         else:
             self.ui.hex_line_edit_reset_value.setText(value)
+
+        self.ui.hex_addr_cfg_tip.setText(" "*15)
 
     # value handle functions########################################################################
     @pyqtSlot(str)#self.lineEdit.returnPressed.connect(self.lineEdit_function)
@@ -353,10 +362,17 @@ class MainWindow(QMainWindow):
         self.ui.hex_table.setCellWidget(row,col,com_box)
 
     def update_table(self,addr):#通过ddr 重新获取需要展示到表格的数据
+        self.clear_table()
+
         if addr not in self.json_parse.cfg_addr_list:
             return
-        self.clear_table()
+        
         region_list = self.json_parse.json_reg_cfg_data[addr]["region"]
+        if 0 == len(region_list):
+            self.ui.hex_table_func_list_label.setText("No func config")
+            self.ui.hex_table_func_list_label.setStyleSheet("color: red")
+        else:
+            self.ui.hex_table_func_list_label.setText(" "*len("No func config"))
 
         value = 0
         if self.ui.hex_update_value_enable_radio.isChecked():
