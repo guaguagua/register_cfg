@@ -187,6 +187,7 @@ class MainWindow(QMainWindow):
         self.ui.hex_bit_edit_check.setChecked(True)
         self.ui.hex_bit_edit_check.setChecked(False)
         self.connect_all_check_btn()
+        #self.update_bit_check_color(0,0,0)
 
     def connect_all_check_btn(self):
         for check in self.check_btn_list:
@@ -228,6 +229,11 @@ class MainWindow(QMainWindow):
     def set_all_bit_check_state(self,state):
         for box in self.check_btn_list:
             box.setEnabled(state)
+    
+    def update_bit_check_color(self,start,end,color):
+        self.check_btn_list[0].setStyleSheet("background: red")
+        #self.check_btn_list[0].setStyleSheet("color: red")
+        pass
 
     @pyqtSlot(bool)
     def on_hex_bit_edit_check_toggled(self,bool):
@@ -447,10 +453,13 @@ class MainWindow(QMainWindow):
     #cfg handle##################################################################
     def init_cfg(self):
         self.ui.cfg_line_edit_addr.setText(self.default_addr)
+        self.ui.cfg_add_label.setText(" "*len("json error"))
+        self.ui.cfg_add_label.setStyleSheet("color: red")
 
     @pyqtSlot(str)
     def on_cfg_line_edit_addr_textChanged(self,addr):
         print("on_cfg_line_edit_addr_textChanged")
+        #self.ui.cfg_add_label.setText(" "*len("json error"))
 
     def read_addr_cfg(self):
         addr = self.ui.cfg_line_edit_addr.text()
@@ -463,10 +472,13 @@ class MainWindow(QMainWindow):
             text = " not find addr:{} config".format(addr)
             self.ui.cfg_text_edit.setText(text)
 
+        self.ui.cfg_add_label.setText(" "*len("json error"))
+
 
     @pyqtSlot()
     def on_cfg_read_btn_clicked(self):
         self.read_addr_cfg()
+        #self.ui.cfg_add_label.setText(" "*len("json error"))
 
     @pyqtSlot()
     def on_cfg_demo_btn_clicked(self):
@@ -474,18 +486,22 @@ class MainWindow(QMainWindow):
             text = f.read()
             self.ui.cfg_text_edit.setText(text)
             f.close()
+        self.ui.cfg_add_label.setText(" "*len("json error"))
 
     @pyqtSlot()
     def on_cfg_clear_btn_clicked(self):
         self.ui.cfg_text_edit.setText("")
+        self.ui.cfg_add_label.setText(" "*len("json error"))
 
     @pyqtSlot()
     def on_cfg_add_btn_clicked(self):
         text = self.ui.cfg_text_edit.toPlainText()
+        self.ui.cfg_add_label.setText(" "*len("json error"))
         try:# 数据json字符串格式不符合要求
             dic = json.loads(text)
         except Exception as e:
             print(e)
+            self.ui.cfg_add_label.setText("json error")
             return
         print(type(dic))
         addr = self.ui.cfg_line_edit_addr.text()
@@ -532,6 +548,7 @@ class MainWindow(QMainWindow):
             text = f.read()
             self.ui.cfg_text_edit.setText(text)
             f.close()
+        self.ui.cfg_add_label.setText(" "*len("json error"))
 
 
     @pyqtSlot()
@@ -540,6 +557,7 @@ class MainWindow(QMainWindow):
             text = f.read()
             self.ui.cfg_text_edit.setText(text)
             f.close()
+        self.ui.cfg_add_label.setText(" "*len("json error"))
 
     @pyqtSlot()
     def on_cfg_generate_reg_c_file_clicked(self):
@@ -552,12 +570,16 @@ class MainWindow(QMainWindow):
         text += "}"
         self.ui.cfg_text_edit.setText(text)
 
+        self.ui.cfg_add_label.setText(" "*len("json error"))
+
     @pyqtSlot()
     def on_cfg_addr_list_btn_clicked(self):
         text = ""
         for x in self.json_parse.cfg_addr_list:
             text += x+"\n"
         self.ui.cfg_text_edit.setText(text)
+
+        self.ui.cfg_add_label.setText(" "*len("json error"))
 
 
 if __name__ == "__main__":
